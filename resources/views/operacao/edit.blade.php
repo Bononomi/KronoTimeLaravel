@@ -2,12 +2,47 @@
 
 @section('conteudo') 
 
+
+<script>
+   function editProduto(url){
+        
+        confirma = confirm("Deseja realmente editar o produto?");
+        if(confirma){
+        
+        
+        dados = $('#formEdit').serialize();
+    
+        $.ajax({
+        method: 'post',
+        url: url,
+        data: dados,
+        dataType: 'html',
+        success: function (data) {
+         location.href = "/produto";
+        },
+        error: function (argument){
+            alert ('Falha ao editar produto!');
+            }
+        });
+            }
+        return false;
+    }
+
+
+</script>
+
+<!-- #/ Conteúdo da DASHBOARD -->
+        <form action="" method="post" id="formEdit" onsubmit="return editOperacao('{{route('operacao.update', $operacao->codOp)}}')">
+            @csrf
+            @method('patch')
+
+
 <!-- Nome de Operação -->
 <div class="form-group row">
     <label  class="col-lg-4 col-form-label" for="NomeOperacao">Nome Operação <span class="text-danger">*</span>
     </label>
     <div class="col-lg-6">
-        <input type="text" class="form-control" id="NomeOperacao" name="NomeOperacao" placeholder="Nome Operação">
+        <input value="{{$operacao->nomOp}}" type="text" class="form-control" id="NomeOperacao" name="NomeOperacao" placeholder="Nome Operação">
     </div>
 </div>
 <!-- Puxar o Produto -->
